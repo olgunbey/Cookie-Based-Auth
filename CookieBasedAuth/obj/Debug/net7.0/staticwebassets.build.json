@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "eQiu6rpUCN9MKmeDwyWcpqTgNgY0E36lzjJShe4kUIw=",
+  "Source": "CookieBasedAuth",
+  "BasePath": "_content/CookieBasedAuth",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
