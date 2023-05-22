@@ -12,7 +12,7 @@ namespace CookieBasedAuth.Repository.Context
         public DbSet<RoleClaims> RoleClaims { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=OLGUNPC\\SQLEXPRESS;Initial Catalog=CustomIdentity; Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.UseSqlServer("***");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
