@@ -1,6 +1,8 @@
 using CookieBasedAuth.Repository;
+using CookieBasedAuth.Requirements;
 using CookieBasedAuth.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 
@@ -19,10 +21,20 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 {
     var cookie = new CookieBuilder();
     cookie.Name = "GirisCookie";
+    cookie.HttpOnly = true;
     options.Cookie = cookie;
     options.ExpireTimeSpan = TimeSpan.FromDays(1);
     options.SlidingExpiration = true;
-}); 
+});
+
+builder.Services.AddScoped<IAuthorizationHandler, UsernameHandler>();
+builder.Services.AddAuthorization(x =>
+{
+    x.AddPolicy("PasswordPolicy", policy =>
+    {
+        policy.AddRequirements(new UsernameBusiness());
+    });
+});
 
 var app = builder.Build();
 

@@ -1,5 +1,7 @@
 ﻿using CookieBasedAuth.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CookieBasedAuth.Controllers
 {
@@ -19,10 +21,37 @@ namespace CookieBasedAuth.Controllers
             return Ok();
         }
         [HttpPost("LogIn")]
-        public async Task<IActionResult> LogInAsync(string username,string pass)
+        public async Task<IActionResult> LogInAsync(string username,string pass,bool DbRegister)
         {
-            await _service.LogInAsync(pass, username);
+            await _service.LogInAsync(pass, username,DbRegister);
             return Ok();
         }
+
+        [Authorize(Policy = "PasswordPolicy")]
+        [HttpGet("Kontrols")]
+        public IActionResult Kontrols()
+        {
+
+            return Ok("giriş yapıldı");
+        }
+        [HttpGet("LogOut")]
+        public async Task<IActionResult> LogOut()
+        {
+           await _service.LogOutAsync();
+            return Ok();
+        }
+        [HttpGet("AddRole")]
+        public async Task<IActionResult> AddRole(string Rolename)
+        {
+            await _service.AddDbRoleAsync(Rolename);
+            return Ok();
+        }
+        [HttpPost("AddUserRole")]
+        public async Task<IActionResult> AddUserRole(string username,string rolename)
+        {
+           await _service.UserRoleAsync(username, rolename);
+            return Ok();
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CookieBasedAuth.Repository;
+using System.Security.Claims;
 
 namespace CookieBasedAuth.Service
 {
@@ -9,9 +10,20 @@ namespace CookieBasedAuth.Service
         {
             _repository = repository;
         }
-        public async Task LogInAsync(string password, string username)
+
+        public async Task AddDbRoleAsync(string roleName)
         {
-           await _repository.LogInAsync(password, username);
+           await _repository.AddDbRoleAsync(roleName);
+        }
+
+        public async Task AddDbUserClaimAsync(string username, IEnumerable<Claim> claims)
+        {
+          await _repository.AddDbUserClaimAsync(username, claims);
+        }
+
+        public async Task LogInAsync(string password, string username, bool DbRegister)
+        {
+           await _repository.LogInAsync(password, username,DbRegister);
         }
 
         public async Task LogOutAsync()
@@ -22,6 +34,11 @@ namespace CookieBasedAuth.Service
         public async Task SignInAsync(string password, string username)
         {
          await   _repository.SignInAsync(password, username);
+        }
+
+        public async Task UserRoleAsync(string username, string rolename)
+        {
+            await _repository.UserRoleAsync(username, rolename);
         }
     }
 }
